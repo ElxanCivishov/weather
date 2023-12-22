@@ -1,17 +1,18 @@
-import { FC, useState, FormEvent } from "react";
+import { FC, ChangeEvent, FormEvent } from "react";
 import { useAppDispatch } from "../app/hooks";
 import { getWeatherData } from "../features/weather/weatherSlice";
+import SearchSvg from "../assets/images/icon _search_.svg";
 
 interface SearchProps {
-  title: string;
+  city: string;
+  setCity: React.Dispatch<React.SetStateAction<string>>;
+  // Define any props if needed in the future
 }
 
-const Search: FC<SearchProps> = ({ title }) => {
-  const [city, setCity] = useState("");
-
+const Search: FC<SearchProps> = ({ city, setCity }) => {
   const dispatch = useAppDispatch();
 
-  const changeHandler = (e: FormEvent<HTMLInputElement>) => {
+  const changeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setCity(e.currentTarget.value);
   };
 
@@ -21,36 +22,28 @@ const Search: FC<SearchProps> = ({ title }) => {
     if (city.trim() === "") {
       return alert("Please enter a city");
     }
-
-    // dispatch(setLoading());
-    dispatch(getWeatherData(city));
+    dispatch(getWeatherData({ query: city, units: "" }));
     setCity("");
   };
 
   return (
-    <div className="hero is-light has-text-centered">
-      <div className="hero-body">
-        <div className="container">
-          <h1 className="title">{title}</h1>
-          <form className="py-5" onSubmit={submitHandler}>
-            <input
-              type="text"
-              className="input has-text-centered mb-2"
-              placeholder="Enter city name"
-              style={{ maxWidth: 300 }}
-              value={city}
-              onChange={changeHandler}
-            />
-            <button
-              className="button is-primary is-fullwidth"
-              style={{ maxWidth: 300, margin: "0 auto" }}
-            >
-              Search
-            </button>
-          </form>
-        </div>
+    <form onSubmit={submitHandler}>
+      <div className="flex items-center justify-between gap-1 p-1 bg-colorLight rounded mt-11 pl-[33px] pr-[10px] w-full md:w-[711px] h-[66px] mx-auto">
+        <input
+          className="w-full focus:outline-none text-colorTextBlack font-light leading-normal bg-transparent border-none text-[30px]"
+          value={city}
+          onChange={changeHandler}
+          placeholder="Enter city or country name..."
+        />
+        <button type="submit" className="outline-none border-0 p-2">
+          <img
+            src={SearchSvg}
+            alt=""
+            className="w-[45px] h-[45px]  object-contain"
+          />
+        </button>
       </div>
-    </div>
+    </form>
   );
 };
 

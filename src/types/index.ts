@@ -49,6 +49,18 @@ export interface WeatherError {
 
 export interface WeatherState {
   data: WeatherData | null;
-  loading: boolean;
-  error: string;
+  isLoading: boolean;
+  isSuccess: boolean;
+  isError: boolean;
+  message: string | null;
+}
+
+export interface WeatherSwitchDay {
+  field: string;
+  value?: string | number;
+}
+
+export interface AlertProps {
+  message: string;
+  onClose: () => void;
 }

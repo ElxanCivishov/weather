@@ -9,15 +9,28 @@ export default {
       },
       colors: {
         colorBlack: "#252323",
+        colorTextBlack: "#524E4E",
+        colorTextError: "#5F2120DE",
+        colorLightPink: "#FDEDED",
         colorLight: "#D9D9D9",
+        colorLightTwo: "#F2F1F1",
         colorPrimary: "#AD36CB",
+        colorLightGreen: "#4FFF32",
+        colorDarkGreen: "#3D6E35",
       },
       boxShadow: {
         DEFAULT:
-          "0 1px 3px 0 rgba(0, 0, 0, 0.08), 0 1px 2px 0 rgba(0, 0, 0, 0.02)",
-        md: "0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -1px rgba(0, 0, 0, 0.02)",
-        lg: "0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.01)",
-        xl: "0 20px 25px -5px rgba(0, 0, 0, 0.08), 0 10px 10px -5px rgba(0, 0, 0, 0.01)",
+          "0px 4px 4px 0px rgba(0, 0, 0, 0.25), 0px 4px 4px 0px rgba(255, 250, 250, 0.25), 0px 4px 4px 0px rgba(253, 245, 245, 0.25)",
+        md: "0px 4px 4px 0px rgba(0, 0, 0, 0.25)",
+        // lg: "0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.01)",
+        // xl: "0 20px 25px -5px rgba(0, 0, 0, 0.08), 0 10px 10px -5px rgba(0, 0, 0, 0.01)",
+      },
+      backgroundImage: {
+        "gradient-1": "linear-gradient(113deg, #AD36CB 32.23%, #333 67.37%)",
+        "gradient-2":
+          "linear-gradient(180deg, #B32DD4 0%, rgba(217, 217, 217, 0.00) 100%)",
+        "gradient-3":
+          "linear-gradient(108deg, #373333 4.85%, rgba(55, 51, 51, 0.00) 103.29%)",
       },
       outline: {
         blue: "2px solid rgba(0, 112, 244, 0.5)",
@@ -43,7 +56,8 @@ export default {
         md: "768px",
         lg: "1024px",
         xl: "1280px",
-        "2xl": "1536px",
+        "2xl": "1440px",
+        "3xl": "1536px",
       },
       borderWidth: {
         2: "2px",
