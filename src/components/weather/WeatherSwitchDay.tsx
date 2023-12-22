@@ -1,11 +1,11 @@
 import { FC } from "react";
 import { useSearchParams } from "react-router-dom";
-import { WeatherSwitchDay } from "../../types";
+import { WeatherSwitchDayProps } from "../../types";
 
 const WeatherSwitchDay: FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const handleChangeDay = ({ field, value }: WeatherSwitchDay): void => {
+  const handleChangeDay = ({ field, value }: WeatherSwitchDayProps): void => {
     if (!field || value === undefined || value === null) {
       searchParams.delete(field);
     } else {

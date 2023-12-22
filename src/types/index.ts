@@ -55,7 +55,7 @@ export interface WeatherState {
   message: string | null;
 }
 
-export interface WeatherSwitchDay {
+export interface WeatherSwitchDayProps {
   field: string;
   value?: string | number;
 }
