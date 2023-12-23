@@ -1,7 +1,6 @@
 import { FC } from "react";
-
 import { Routes, Route } from "react-router-dom";
-import { Layout } from "./components";
+import { Layout } from "./partials";
 import { DisplayWeather } from "./pages";
 
 const App: FC = () => {

@@ -1,16 +1,15 @@
 import React from "react";
-import { useAppDispatch } from "../../app/hooks";
-import { setAlert } from "../../features/alertSlice";
-import { AlertProps } from "../../types";
+import { AlertProps } from "../types";
+import { useAppDispatch } from "../app/hooks";
+import { setAlert } from "../features/alertSlice";
 
-import errorPng from "../../assets/images/error_outline.png";
+import errorPng from "../assets/images/error_outline.png";
 
-const Alert: React.FunctionComponent<AlertProps> = ({ message, onClose }) => {
+const Alert: React.FC<AlertProps> = ({ message, onClose }) => {
   const dispatch = useAppDispatch();
-
   const handleClose = () => {
     dispatch(setAlert(""));
-    onClose();
+    if (onClose) onClose();
   };
 
   return (

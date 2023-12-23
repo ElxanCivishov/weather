@@ -2,9 +2,9 @@ import { FC, ChangeEvent, FormEvent, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { getWeatherData } from "../features/weatherSlice";
 import SearchSvg from "../assets/images/icon _search_.svg";
-import { Alert } from "./common";
+import { Alert } from "../partials";
 import useAlert from "../helper/useAlert";
-import { WeatherData } from "../types";
+import { updateRecentWeatherData } from "../helper/updateRecent";
 
 const Search: FC = () => {
   const dispatch = useAppDispatch();
@@ -24,22 +24,10 @@ const Search: FC = () => {
       showAlert("Please enter a city or country name");
     } else {
       const data = await dispatch(getWeatherData(city));
-      setCity("");
-
       if (data.payload.cod === 200) {
-        const storedData = localStorage.getItem("recentWeatherData");
-
-        const recentWeatherData: WeatherData[] | null = storedData
-          ? JSON.parse(storedData)
-          : null;
-
-        const sdata = recentWeatherData
-          ? [...recentWeatherData.slice(1, 5), data.payload]
-          : [data.payload];
-        localStorage.setItem("recentWeatherData", JSON.stringify(sdata));
+        updateRecentWeatherData(data.payload);
       }
-      console.log("cod", data.payload.cod);
-      console.log("cod", data.payload);
+      setCity("");
     }
   };
 

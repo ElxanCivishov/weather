@@ -2,7 +2,6 @@ import { FC } from "react";
 import { useSearchParams } from "react-router-dom";
 import locationSvg from "../../../assets/images/icon _location_.svg";
 import temperatureSvg from "../../../assets/images/icon _temperature_.svg";
-// import cloudSvg from "../../assets/images/Cloud.svg";
 import { WeatherData } from "../../../types";
 import { formatDateForTab } from "../../../helper/date";
 
@@ -17,15 +16,13 @@ const WeatherCard: FC<WeatherProps> = ({ data }) => {
   const fahrenheit = (data.main.temp * 1.8 - 459.67).toFixed(2);
   const celsius = (data.main.temp - 273.15).toFixed(2);
 
-  // console.log(data);
-
   return (
-    <div className="h-[425px] w-full lg:w-[817px] bg-gradient-1 shadow rounded-[32px] mt-[33px] mx-auto select-none">
+    <div className="h-[425px] w-full lg:w-[817px] bg-gradient-1 shadow rounded-[32px] mt-[33px] mx-auto select-none hover:scale-105 transition-all duration-300">
       <div className=" px-7 py-9 flex flex-col justify-between h-full">
         <div className="flex items-center justify-between gap-2 max-h-max">
           <div className="flex items-center gap-1">
             <span className="font-light leading-normal text-[30px] text-white">
-              {data.name} - {data.sys.country}
+              {data.name}
             </span>
             <img
               src={locationSvg}
@@ -47,9 +44,7 @@ const WeatherCard: FC<WeatherProps> = ({ data }) => {
               className="w-[18px] h-[62px] object-contain"
             />
             <span className="font-medium leading-normal text-[70px] text-white">
-              {`${
-                searchParams.get("temp") ? fahrenheit + " °F" : celsius + " °C"
-              }`}
+              {searchParams.get("temp") ? fahrenheit + " °F" : celsius + " °C"}
             </span>
             <div className="z-20 w-[78px] h-[46px]">
               <img
@@ -69,7 +64,7 @@ const WeatherCard: FC<WeatherProps> = ({ data }) => {
               Humidity
             </span>
             <span className="font-medium leading-normal text-[22px] text-white">
-              {data.main.humidity}
+              {data.main.humidity}%
             </span>
           </div>
           <div className="flex flex-col">

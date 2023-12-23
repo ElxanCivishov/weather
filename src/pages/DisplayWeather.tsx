@@ -1,40 +1,31 @@
-import { useEffect, useState } from "react";
-import Search from "../components/Search";
+import { useEffect } from "react";
 import { RESET, getWeatherData } from "../features/weatherSlice";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
+import useAlert from "../helper/useAlert";
 import {
   WeatherHeader,
   WeatherRecents,
   WeatherSwitchDay,
   WeatherSwitchTemp,
 } from "../components/weather";
-import { Alert, ProgressBarLoader } from "../components/common";
-import useAlert from "../helper/useAlert";
+import { Alert, ProgressBarLoader } from "../partials";
 import { WeatherCard } from "../components/weather/cards";
-import { WeatherData } from "../types";
+import { Search } from "../components";
+import { useSearchParams } from "react-router-dom";
 
 const DisplayWeather = () => {
   const dispatch = useAppDispatch();
+  const [searchParams] = useSearchParams();
+  const alertMsg = useAppSelector((state) => state.alert.message);
+  const showAlert = useAlert();
   const { data, isLoading, isError, message } = useAppSelector(
     (state) => state.weatherData
   );
-  const alertMsg = useAppSelector((state) => state.alert.message);
-  const showAlert = useAlert();
 
+  //get resending weather data from click recent card
   useEffect(() => {
-    dispatch(getWeatherData("Bakı"));
-  }, []);
-
-  const [recents, setRecents] = useState<WeatherData[]>([]);
-
-  const storedData = localStorage.getItem("recentWeatherData");
-
-  useEffect(() => {
-    const recentWeatherData: WeatherData[] | null = storedData
-      ? JSON.parse(storedData)
-      : null;
-    setRecents(recentWeatherData || []);
-  }, [storedData, data]);
+    dispatch(getWeatherData(searchParams.get("q") || "Bakı"));
+  }, [searchParams.get("q")]);
 
   useEffect(() => {
     if (message && isError) {
@@ -54,7 +45,7 @@ const DisplayWeather = () => {
         </div>
         <Search />
         {data && <WeatherCard data={data} />}
-        {recents && <WeatherRecents recents={recents} />}
+        <WeatherRecents />
       </div>
 
       {alertMsg && (

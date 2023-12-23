@@ -9,9 +9,7 @@ export const getWeatherData = createAsyncThunk(
   "weather/getWeatherData",
   async (query: string, thunkAPI) => {
     try {
-      const response = await axiosInstance.get(
-        `?q=${query}&appid=${appid}&limit=5`
-      );
+      const response = await axiosInstance.get(`?q=${query}&appid=${appid}`);
 
       return response.data;
     } catch (error: any) {
