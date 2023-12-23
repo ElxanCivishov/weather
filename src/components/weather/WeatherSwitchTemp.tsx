@@ -6,9 +6,9 @@ const WeatherSwitchTemp: FC = () => {
 
   const handleChangeTemp = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.checked) {
-      searchParams.set("units", "imperial");
+      searchParams.set("temp", "imperial");
     } else {
-      searchParams.delete("units");
+      searchParams.delete("temp");
     }
     setSearchParams(searchParams, {
       replace: true,
@@ -24,7 +24,7 @@ const WeatherSwitchTemp: FC = () => {
         <input
           type="checkbox"
           id="switch"
-          checked={!!searchParams.get("units")}
+          checked={!!searchParams.get("temp")}
           className="sr-only peer"
           onChange={(e) => handleChangeTemp(e)}
         />

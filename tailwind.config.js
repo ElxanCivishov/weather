@@ -62,6 +62,7 @@ export default {
       borderWidth: {
         2: "2px",
         3: "3px",
+        4: "4px",
       },
       minWidth: {
         36: "9rem",

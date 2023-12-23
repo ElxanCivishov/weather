@@ -1,9 +1,18 @@
-import { FC } from "react";
+import React from "react";
+import { useAppDispatch } from "../../app/hooks";
+import { setAlert } from "../../features/alertSlice";
 import { AlertProps } from "../../types";
 
 import errorPng from "../../assets/images/error_outline.png";
 
-const Alert: FC<AlertProps> = ({ message, onClose }) => {
+const Alert: React.FunctionComponent<AlertProps> = ({ message, onClose }) => {
+  const dispatch = useAppDispatch();
+
+  const handleClose = () => {
+    dispatch(setAlert(""));
+    onClose();
+  };
+
   return (
     <div className="fixed top-8 right-8 z-40">
       <div className="flex items-center justify-between gap-3 rounded bg-colorLightPink px-4 py-2 w-full md:w-[448px]">
@@ -18,8 +27,8 @@ const Alert: FC<AlertProps> = ({ message, onClose }) => {
           </span>
         </div>
         <span
-          className="font-medium text-red-600 text-base md:text-xl !cursor-pointer"
-          onClick={() => onClose()}
+          className="font-medium text-red-600 text-base md:text-xl cursor-pointer"
+          onClick={() => handleClose()}
         >
           x
         </span>

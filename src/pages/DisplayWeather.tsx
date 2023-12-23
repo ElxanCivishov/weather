@@ -1,35 +1,46 @@
 import { useEffect, useState } from "react";
 import Search from "../components/Search";
-import { RESET, getWeatherData } from "../features/weather/weatherSlice";
+import { RESET, getWeatherData } from "../features/weatherSlice";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import {
-  WeatherCard,
   WeatherHeader,
-  WeatherRecentCard,
+  WeatherRecents,
   WeatherSwitchDay,
   WeatherSwitchTemp,
 } from "../components/weather";
 import { Alert, ProgressBarLoader } from "../components/common";
-import { useSearchParams } from "react-router-dom";
-import { setAlert } from "../features/alertSlice";
+import useAlert from "../helper/useAlert";
+import { WeatherCard } from "../components/weather/cards";
+import { WeatherData } from "../types";
 
 const DisplayWeather = () => {
   const dispatch = useAppDispatch();
-  const [searchParams] = useSearchParams();
-  const [city, setCity] = useState("Baki");
   const { data, isLoading, isError, message } = useAppSelector(
     (state) => state.weatherData
   );
   const alertMsg = useAppSelector((state) => state.alert.message);
+  const showAlert = useAlert();
 
   useEffect(() => {
-    dispatch(
-      getWeatherData({ query: city, units: searchParams.get("units") || "" })
-    );
-  }, [searchParams.get("units")]);
+    dispatch(getWeatherData("Bakı"));
+  }, []);
+
+  const [recents, setRecents] = useState<WeatherData[]>([]);
+
+  const storedData = localStorage.getItem("recentWeatherData");
 
   useEffect(() => {
-    if (isError && message) dispatch(setAlert(message));
+    const recentWeatherData: WeatherData[] | null = storedData
+      ? JSON.parse(storedData)
+      : null;
+    setRecents(recentWeatherData || []);
+  }, [storedData, data]);
+
+  useEffect(() => {
+    if (message && isError) {
+      showAlert(message);
+      dispatch(RESET());
+    }
   }, [isError, message]);
 
   return (
@@ -41,23 +52,19 @@ const DisplayWeather = () => {
           <WeatherSwitchTemp />
           <WeatherSwitchDay />
         </div>
-        <Search setCity={setCity} city={city} />
-        {alertMsg && (
-          <Alert message={alertMsg} onClose={() => dispatch(setAlert(""))} />
-        )}
-        {isError && message && (
-          <Alert message={message} onClose={() => dispatch(RESET())} />
-        )}
-
+        <Search />
         {data && <WeatherCard data={data} />}
-        <div className="grid grid-cols-2  md:grid-cols-3 lg:grid-cols-5 gap-8 md:gap-12 lg:gap-16 px-10 mt-8 ">
-          <WeatherRecentCard />
-          <WeatherRecentCard />
-          <WeatherRecentCard />
-          <WeatherRecentCard />
-          <WeatherRecentCard />
-        </div>
+        {recents && <WeatherRecents recents={recents} />}
       </div>
+
+      {alertMsg && (
+        <Alert
+          message={alertMsg}
+          onClose={() => {
+            dispatch(RESET());
+          }}
+        />
+      )}
     </section>
   );
 };

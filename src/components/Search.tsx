@@ -1,29 +1,46 @@
-import { FC, ChangeEvent, FormEvent } from "react";
-import { useAppDispatch } from "../app/hooks";
-import { getWeatherData } from "../features/weather/weatherSlice";
+import { FC, ChangeEvent, FormEvent, useState } from "react";
+import { useAppDispatch, useAppSelector } from "../app/hooks";
+import { getWeatherData } from "../features/weatherSlice";
 import SearchSvg from "../assets/images/icon _search_.svg";
+import { Alert } from "./common";
+import useAlert from "../helper/useAlert";
+import { WeatherData } from "../types";
 
-interface SearchProps {
-  city: string;
-  setCity: React.Dispatch<React.SetStateAction<string>>;
-  // Define any props if needed in the future
-}
-
-const Search: FC<SearchProps> = ({ city, setCity }) => {
+const Search: FC = () => {
   const dispatch = useAppDispatch();
+  const [city, setCity] = useState("");
+  const alertMsg = useAppSelector((state) => state.alert.message);
+
+  const showAlert = useAlert();
 
   const changeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setCity(e.currentTarget.value);
   };
 
-  const submitHandler = (e: FormEvent<HTMLFormElement>) => {
+  const submitHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (city.trim() === "") {
-      return alert("Please enter a city");
+      showAlert("Please enter a city or country name");
+    } else {
+      const data = await dispatch(getWeatherData(city));
+      setCity("");
+
+      if (data.payload.cod === 200) {
+        const storedData = localStorage.getItem("recentWeatherData");
+
+        const recentWeatherData: WeatherData[] | null = storedData
+          ? JSON.parse(storedData)
+          : null;
+
+        const sdata = recentWeatherData
+          ? [...recentWeatherData.slice(1, 5), data.payload]
+          : [data.payload];
+        localStorage.setItem("recentWeatherData", JSON.stringify(sdata));
+      }
+      console.log("cod", data.payload.cod);
+      console.log("cod", data.payload);
     }
-    dispatch(getWeatherData({ query: city, units: "" }));
-    setCity("");
   };
 
   return (
@@ -43,6 +60,7 @@ const Search: FC<SearchProps> = ({ city, setCity }) => {
           />
         </button>
       </div>
+      {alertMsg && <Alert message={alertMsg} />}
     </form>
   );
 };

@@ -62,5 +62,5 @@ export interface WeatherSwitchDayProps {
 
 export interface AlertProps {
   message: string;
-  onClose: () => void;
+  onClose?: () => void;
 }
