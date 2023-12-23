@@ -1,6 +1,6 @@
-import { FC } from "react";
+import { FC, useMemo } from "react";
 import { useSearchParams } from "react-router-dom";
-import { WeatherSwitchDayProps } from "../../types";
+import { IWeatherSwitchDay } from "../../types";
 
 interface DateTabsProps {
   id: number;
@@ -24,7 +24,12 @@ const dateTabs: DateTabsProps[] = [
 const WeatherSwitchDay: FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const handleChangeDay = ({ field, value }: WeatherSwitchDayProps): void => {
+  const date = useMemo(
+    () => searchParams.get("date"),
+    [searchParams.get("date")]
+  );
+
+  const handleChangeDay = ({ field, value }: IWeatherSwitchDay): void => {
     if (!field || value === "") {
       searchParams.delete(field);
     } else {
@@ -40,8 +45,7 @@ const WeatherSwitchDay: FC = () => {
           className={`
       inline-flex px-4 items-center gap-4 flex-shrink-0 border-b-4 trasition-all duration-300
       ${
-        (!searchParams.get("date") && index === 0) ||
-        searchParams.get("date") === tab.value
+        (!date && index === 0) || date === tab.value
           ? "border-colorLightGreen text-colorLightGreen"
           : "border-transparent text-colorLight"
       } 

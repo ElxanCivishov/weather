@@ -1,66 +1,88 @@
-export interface Weather {
+export interface IWeather {
   description: string;
   icon: string;
   id: number;
   main: string;
 }
 
-export interface WeatherData {
-  base: string;
-  clouds: {
-    all: number;
-  };
-  cod: number;
-  coord: {
-    lon: number;
-    lat: number;
-  };
-  dt: number;
-  id: number;
-  main: {
-    feels_like: number;
-    humidity: number;
-    pressure: number;
-    temp: number;
-    temp_max: number;
-    temp_min: number;
-  };
-  name: string;
-  sys: {
-    country: string;
-    id: number;
-    sunrise: number;
-    sunset: number;
-    type: number;
-  };
-  timezone: number;
-  visibility: number;
-  weather: Weather[];
-  wind: {
-    speed: number;
-    deg: number;
-  };
+export interface IWeatherClouds {
+  all: number;
 }
 
-export interface WeatherError {
+export interface IWeatherCoord {
+  lon: number;
+  lat: number;
+}
+
+export interface IWeatherMain {
+  feels_like: number;
+  humidity: number;
+  sea_level?: number;
+  grnd_level?: number;
+  pressure: number;
+  temp: number;
+  temp_max: number;
+  temp_min: number;
+}
+
+export interface IWeatherSys {
+  country: string;
+  id: number;
+  sunrise: number;
+  sunset: number;
+  type: number;
+}
+
+export interface IWeatherWind {
+  speed: number;
+  deg: number;
+  gust?: number;
+}
+
+export interface IWeatherData {
+  base: string;
+  clouds: IWeatherClouds;
+  cod: number;
+  coord: IWeatherCoord;
+  dt: number;
+  id: number;
+  main: IWeatherMain;
+  name: string;
+  sys: IWeatherSys;
+  timezone: number;
+  visibility: number;
+  weather: IWeather[];
+  wind: IWeatherWind;
+}
+
+export interface IWeatherError {
   cod: string;
   message: string;
 }
 
-export interface WeatherState {
-  data: WeatherData | null;
+export interface IWeatherState {
+  data?: IWeatherData;
   isLoading: boolean;
   isSuccess: boolean;
   isError: boolean;
-  message: string | null;
+  message?: string;
 }
 
-export interface WeatherSwitchDayProps {
+export interface IWeatherSwitchDay {
   field: string;
   value?: string | number;
 }
 
-export interface AlertProps {
+export interface IAlertState {
+  message?: string;
+}
+
+export interface IAlert {
   message: string;
   onClose?: () => void;
+}
+
+export interface IStorageOptions<T> {
+  key: string;
+  value: T;
 }

@@ -2,11 +2,11 @@ import { FC } from "react";
 import { useSearchParams } from "react-router-dom";
 import locationSvg from "../../../assets/images/icon _location_.svg";
 import temperatureSvg from "../../../assets/images/icon _temperature_.svg";
-import { WeatherData } from "../../../types";
+import { IWeatherData } from "../../../types";
 import { formatDateForTab } from "../../../helper/date";
 
 interface WeatherProps {
-  data: WeatherData;
+  data: IWeatherData;
 }
 
 const WeatherCard: FC<WeatherProps> = ({ data }) => {

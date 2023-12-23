@@ -1,9 +1,9 @@
 import { FC } from "react";
 import { useSearchParams } from "react-router-dom";
-import { WeatherData } from "../../../types";
+import { IWeatherData } from "../../../types";
 
 interface WeatherProps {
-  data: WeatherData;
+  data: IWeatherData;
 }
 
 const WeatherRecentCard: FC<WeatherProps> = ({ data }) => {
@@ -12,7 +12,7 @@ const WeatherRecentCard: FC<WeatherProps> = ({ data }) => {
   const celsius = Math.round(data.main.temp - 273.15);
 
   const handleClickRecent = (name: string) => {
-    searchParams.set("q", name);
+    searchParams.set("query", name);
     setSearchParams(searchParams, { replace: true });
   };
 

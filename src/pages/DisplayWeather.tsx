@@ -1,6 +1,11 @@
 import { useEffect } from "react";
-import { RESET, getWeatherData } from "../features/weatherSlice";
+import { useSearchParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
+import { DEFAULT_CITY } from "../constants";
+import { IAlertState, IWeatherState } from "../types";
+
+import { Alert, ProgressBarLoader } from "../partials";
+
 import useAlert from "../helper/useAlert";
 import {
   WeatherHeader,
@@ -8,37 +13,43 @@ import {
   WeatherSwitchDay,
   WeatherSwitchTemp,
 } from "../components/weather";
-import { Alert, ProgressBarLoader } from "../partials";
+
 import { WeatherCard } from "../components/weather/cards";
 import { Search } from "../components";
-import { useSearchParams } from "react-router-dom";
+import {
+  RESET as RESET_WEATHER_STATE,
+  getWeatherData,
+} from "../features/weatherSlice";
 
 const DisplayWeather = () => {
   const dispatch = useAppDispatch();
   const [searchParams] = useSearchParams();
-  const alertMsg = useAppSelector((state) => state.alert.message);
   const showAlert = useAlert();
-  const { data, isLoading, isError, message } = useAppSelector(
+
+  const { message: alertMsg } = useAppSelector<IAlertState>(
+    (state) => state.alert
+  );
+  const { data, isLoading, isError, message } = useAppSelector<IWeatherState>(
     (state) => state.weatherData
   );
 
-  //get resending weather data from click recent card
+  //get default or  weather data when click recent card
   useEffect(() => {
-    dispatch(getWeatherData(searchParams.get("q") || "Bakı"));
-  }, [searchParams.get("q")]);
+    dispatch(getWeatherData(searchParams.get("query") || DEFAULT_CITY));
+  }, [searchParams.get("query")]);
 
   useEffect(() => {
     if (message && isError) {
       showAlert(message);
-      dispatch(RESET());
+      dispatch(RESET_WEATHER_STATE());
     }
   }, [isError, message]);
 
   return (
     <section className="pb-10 overflow-hidden">
-      {isLoading ? <ProgressBarLoader isLoading={isLoading} /> : null}
+      {isLoading && <ProgressBarLoader isLoading={isLoading} />}
       <div className="2xl:container mx-auto px-2 md:px-0 pb-10 ">
-        <WeatherHeader />
+        <WeatherHeader title="Hotlify" />
         <div className="flex flex-col md:flex-row md:items-center mt-12 ">
           <WeatherSwitchTemp />
           <WeatherSwitchDay />
@@ -52,7 +63,7 @@ const DisplayWeather = () => {
         <Alert
           message={alertMsg}
           onClose={() => {
-            dispatch(RESET());
+            dispatch(RESET_WEATHER_STATE());
           }}
         />
       )}

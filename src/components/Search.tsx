@@ -1,33 +1,37 @@
 import { FC, ChangeEvent, FormEvent, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
-import { getWeatherData } from "../features/weatherSlice";
 import SearchSvg from "../assets/images/icon _search_.svg";
 import { Alert } from "../partials";
 import useAlert from "../helper/useAlert";
-import { updateRecentWeatherData } from "../helper/updateRecent";
+import { IAlertState } from "../types";
+import { recentWeatherData } from "../helper/recentWeatherData";
+import { getWeatherData } from "../features/weatherSlice";
 
 const Search: FC = () => {
   const dispatch = useAppDispatch();
-  const [city, setCity] = useState("");
-  const alertMsg = useAppSelector((state) => state.alert.message);
-
   const showAlert = useAlert();
 
+  const [city, setCity] = useState<string>("");
+  const { message: alertMsg } = useAppSelector<IAlertState>(
+    (state) => state.alert
+  );
+
   const changeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    setCity(e.currentTarget.value);
+    setCity(e.currentTarget.value.trim());
   };
 
   const submitHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (city.trim() === "") {
+    if (!city) {
       showAlert("Please enter a city or country name");
     } else {
       const data = await dispatch(getWeatherData(city));
       if (data.payload.cod === 200) {
-        updateRecentWeatherData(data.payload);
+        recentWeatherData(data.payload);
       }
       setCity("");
+      console.log("search", data);
     }
   };
 
@@ -53,4 +57,5 @@ const Search: FC = () => {
   );
 };
 
+Search.displayName = "Search";
 export default Search;

@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { axiosInstance } from "../app/config";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import { WeatherState } from "../types";
+import { IWeatherState } from "../types";
 
 const appid = import.meta.env.VITE_OPEN_WEATHER_API_KEY;
 
@@ -24,8 +24,8 @@ export const getWeatherData = createAsyncThunk(
   }
 );
 
-const initialState: WeatherState = {
-  data: null,
+const initialState: IWeatherState = {
+  data: undefined,
   isLoading: false,
   isError: false,
   isSuccess: false,

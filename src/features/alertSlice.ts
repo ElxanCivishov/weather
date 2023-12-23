@@ -1,11 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { IAlertState } from "../types";
 
-interface AlertState {
-  message: string | null;
-}
-
-const initialState: AlertState = {
-  message: null,
+const initialState: IAlertState = {
+  message: "",
 };
 
 export const alertSlice = createSlice({
@@ -16,7 +13,7 @@ export const alertSlice = createSlice({
       state.message = payload;
     },
     resetAlert: (state) => {
-      state.message = null;
+      state.message = "";
     },
   },
 });

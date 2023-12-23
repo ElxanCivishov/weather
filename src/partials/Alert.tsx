@@ -1,12 +1,13 @@
-import React from "react";
-import { AlertProps } from "../types";
+import { FC } from "react";
 import { useAppDispatch } from "../app/hooks";
 import { setAlert } from "../features/alertSlice";
+import { IAlert } from "../types";
 
 import errorPng from "../assets/images/error_outline.png";
 
-const Alert: React.FC<AlertProps> = ({ message, onClose }) => {
+const Alert: FC<IAlert> = ({ message, onClose }) => {
   const dispatch = useAppDispatch();
+
   const handleClose = () => {
     dispatch(setAlert(""));
     if (onClose) onClose();

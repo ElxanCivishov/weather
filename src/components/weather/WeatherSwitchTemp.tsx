@@ -1,14 +1,21 @@
 import { FC, ChangeEvent } from "react";
 import { useSearchParams } from "react-router-dom";
+import {
+  WEATHER_TEMPERATURE_FAHRENHEIT,
+  WEATHER_TEMPERATURE_QUERY_KEY,
+} from "../../constants";
 
 const WeatherSwitchTemp: FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const handleChangeTemp = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.checked) {
-      searchParams.set("temp", "imperial");
+      searchParams.set(
+        WEATHER_TEMPERATURE_QUERY_KEY,
+        WEATHER_TEMPERATURE_FAHRENHEIT
+      );
     } else {
-      searchParams.delete("temp");
+      searchParams.delete(WEATHER_TEMPERATURE_QUERY_KEY);
     }
     setSearchParams(searchParams, {
       replace: true,
@@ -23,8 +30,7 @@ const WeatherSwitchTemp: FC = () => {
       <label className="relative inline-flex items-center cursor-pointer">
         <input
           type="checkbox"
-          id="switch"
-          checked={!!searchParams.get("temp")}
+          checked={!!searchParams.get(WEATHER_TEMPERATURE_QUERY_KEY)}
           className="sr-only peer"
           onChange={(e) => handleChangeTemp(e)}
         />
