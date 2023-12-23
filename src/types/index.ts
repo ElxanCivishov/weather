@@ -86,3 +86,9 @@ export interface IStorageOptions<T> {
   key: string;
   value: T;
 }
+
+export interface IDateTabs {
+  id: number;
+  title: string;
+  value: string;
+}

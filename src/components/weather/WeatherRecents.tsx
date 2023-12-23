@@ -27,4 +27,5 @@ const WeatherRecents: FC = () => {
   );
 };
 
+WeatherRecents.displayName = "WeatherRecents";
 export default WeatherRecents;

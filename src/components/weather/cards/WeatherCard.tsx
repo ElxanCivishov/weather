@@ -81,4 +81,5 @@ const WeatherCard: FC<WeatherProps> = ({ data }) => {
   );
 };
 
+WeatherCard.displayName = "WeatherCard";
 export default WeatherCard;

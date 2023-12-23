@@ -38,4 +38,5 @@ const ProgressBarLoader: FC<{ isLoading: boolean }> = ({ isLoading }) => {
   );
 };
 
+ProgressBarLoader.displayName = "ProgressBarLoader";
 export default ProgressBarLoader;

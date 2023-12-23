@@ -9,4 +9,5 @@ const Layout: FC = () => {
   );
 };
 
+Layout.displayName = "Layout";
 export default Layout;

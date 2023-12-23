@@ -17,4 +17,5 @@ const useAlert = () => {
   return showAlert;
 };
 
+useAlert.displayName = "useAlert";
 export default useAlert;

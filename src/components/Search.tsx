@@ -31,7 +31,6 @@ const Search: FC = () => {
         recentWeatherData(data.payload);
       }
       setCity("");
-      console.log("search", data);
     }
   };
 

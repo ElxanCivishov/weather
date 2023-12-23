@@ -43,4 +43,5 @@ const WeatherSwitchTemp: FC = () => {
   );
 };
 
+WeatherSwitchTemp.displayName = "WeatherSwitchTemp";
 export default WeatherSwitchTemp;

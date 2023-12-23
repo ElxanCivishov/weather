@@ -71,4 +71,5 @@ const DisplayWeather = () => {
   );
 };
 
+DisplayWeather.displayName = "DisplayWeather";
 export default DisplayWeather;

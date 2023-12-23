@@ -37,4 +37,5 @@ const Alert: FC<IAlert> = ({ message, onClose }) => {
   );
 };
 
+Alert.displayName = "Alert";
 export default Alert;

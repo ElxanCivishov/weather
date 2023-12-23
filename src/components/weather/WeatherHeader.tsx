@@ -24,4 +24,5 @@ const WeatherHeader: FC<WeatherHeaderProps> = memo(({ title }) => {
   );
 });
 
+WeatherHeader.displayName = "WeatherHeader";
 export default WeatherHeader;
